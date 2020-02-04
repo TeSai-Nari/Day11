@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Kuis</title>
+</head>
+<body>
+    <center>
+       
+
+
+    </center>
+    <center>
+        <h1 id="hasil"></h1>
+        <button onclick="reset()">reset</button>
+    </center>
+</body>
+<script>
+    class Soal{
+        constructor(soal,pilihan,jawaban,kelompokname){
+            this.soal=soal,
+            this.pilihan=pilihan,
+            this.jawaban=jawaban,
+            this.kelompokname=kelompokname
+        }
+    }
+    var datasoal=[
+        new Soal('siapa presiden ke 3 ?',['bj.habibie','soekarno','abdurahmanwahid','jokowi'],0,'presiden'),
+        new Soal('siapa penyanyi lagu baby ?',['justin timberlake','bieber','iwan false','udin'],1,'penyanyi'),
+        new Soal('siapa penemu gunting kuku ?',['si irza','mas riza','masa sih','iya sih'],0,'guntingkuku'),
+        new Soal('siapa hokage disini',['naruto','saske','goku','dobleh'],3,'hokage'),
+        new Soal('siapa pencipta popok hokage ',['hinata','saya','jamal','kabur'],3,'popok')
+    ]
+    const prindsoal=()=>{
+        var output=``
+        for(var i=0;i<datasoal.length;i++){
+            var pilihan=''
+            for (var j=0;j<datasoal[i].pilihan.length;j++){
+                pilihan+=`<input type="radio"  name=${datasoal[i].kelompokname} value='${j}'><span id='${datasoal[i].kelompokname+j}'>${datasoal[i].pilihan[j]}<span>`
+            }
+            output+=`<p>No. ${i+1} ${datasoal[i].soal}</p>`
+            output+=pilihan
+        }
+        output+=`<br><button onclick='onclickjawab()'>submit</button>`
+        console.log(output)
+        document.getElementsByTagName('center')[0].innerHTML=output
+    }
+    const onclickjawab=()=>{
+        var skor=0
+        var tambahskor=100/datasoal.length
+        var hitungan=0
+        for(var i=0;i<datasoal.length;i++){
+            for(var j=0;j<document.getElementsByName(datasoal[i].kelompokname).length;j++){
+                if(document.getElementsByName(datasoal[i].kelompokname)[j].checked){
+                   if(document.getElementsByName(datasoal[i].kelompokname)[j].value==datasoal[i].jawaban){
+                       skor+=tambahskor
+                   }
+                   hitungan++ 
+                }
+            }
+        }
+        if(hitungan==datasoal.length){
+            document.getElementById('hasil').innerHTML=`selamt anda mendapatkan poin ${skor}`
+        }else{
+            document.getElementById('hasil').innerHTML=`belom`
+        }
+    }
+    prindsoal()
+    const reset=()=>{
+        document.getElementById('hasil').innerHTML=``
+        prindsoal()
+    }
+    // const boldonClick=(indexi,indexj)=>{
+    //     document.getElementById(datasoal[indexi].kelompokname+indexj).style.fontWeight=800
+    // }
+</script>
+</html>
